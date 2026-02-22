@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>[PHASE_04]: THE_GRAVE</title>
+    <style>
+        body { background: #000; margin: 0; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; color: #fff; font-family: 'Courier New', monospace; cursor: none; }
+
+        #grave-container {
+            position: relative; width: 100vw; height: 100vh;
+            background: url('grave.jpg') no-repeat center center;
+            background-size: cover;
+        }
+
+        #flashlight {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle 120px at var(--x) var(--y), transparent 10%, rgba(0,0,0,0.98) 100%);
+            pointer-events: none;
+        }
+
+        #start-screen {
+            position: fixed; z-index: 100; background: #000; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center; flex-direction: column;
+        }
+
+        button { background: none; border: 1px solid #ff0000; color: #ff0000; padding: 15px 30px; cursor: pointer; font-size: 20px; }
+    </style>
+</head>
+<body>
+
+    <div id="start-screen">
+        <button onclick="enterGrave()">ENTER THE GRAVE</button>
+        <p style="margin-top: 20px; color: #444;">(Headphones Recommended)</p>
+    </div>
+
+    <div id="grave-container" style="display:none;">
+        <div id="flashlight"></div>
+        </div>
+
+    <audio id="audio">
+        <source src="boss_voice.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const container = document.getElementById('grave-container');
+        const startScreen = document.getElementById('start-screen');
+        const audio = document.getElementById('audio');
+
+        function enterGrave() {
+            startScreen.style.display = 'none';
+            container.style.display = 'block';
+            audio.play();
+        }
+
+        document.addEventListener('mousemove', e => {
+            container.style.setProperty('--x', e.clientX + 'px');
+            container.style.setProperty('--y', e.clientY + 'px');
+        });
+    </script>
+</body>
+</html>
