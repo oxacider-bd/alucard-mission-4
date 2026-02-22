@@ -12,29 +12,27 @@
             background-size: cover; display: none;
         }
 
-
         #flashlight {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle 200px at var(--x) var(--y), transparent 0%, rgba(0,0,0,0.95) 80%);
+            background: radial-gradient(circle 350px at var(--x) var(--y), transparent 0%, rgba(0,0,0,0.98) 85%);
             pointer-events: none;
         }
 
-        #start-screen {
-            text-align: center; z-index: 100;
-        }
+        #start-screen { text-align: center; z-index: 100; }
 
         button { 
             background: #000; border: 2px solid #ff0000; color: #ff0000; 
             padding: 25px 50px; cursor: pointer; font-size: 24px; 
             letter-spacing: 5px; box-shadow: 0 0 20px #ff0000; font-weight: bold;
+            text-transform: uppercase;
         }
-        button:hover { background: #ff0000; color: #000; box-shadow: 0 0 40px #ff0000; }
+        button:hover { background: #ff0000; color: #000; box-shadow: 0 0 50px #ff0000; }
     </style>
 </head>
 <body>
 
     <div id="start-screen">
-        <button onclick="enterGrave()">ENTER THE GRAVE</button>
+        <button id="entry-btn">ENTER THE GRAVE</button>
         <p style="margin-top: 20px; color: #666; font-size: 14px; letter-spacing: 2px;">মরণকূপে স্বাগতম...</p>
     </div>
 
@@ -42,14 +40,13 @@
         <div id="flashlight"></div>
     </div>
 
-    <audio id="audio" preload="auto">
-        <source src="boss_voice.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="audio" src="boss_voice.mp3" preload="auto"></audio>
 
     <script>
         const container = document.getElementById('grave-container');
         const startScreen = document.getElementById('start-screen');
         const audio = document.getElementById('audio');
+        const btn = document.getElementById('entry-btn');
 
 
         document.addEventListener('mousemove', e => {
@@ -57,16 +54,20 @@
             container.style.setProperty('--y', e.clientY + 'px');
         });
 
-        function enterGrave() {
-        audio.play().then(() => {
-                console.log("Audio playing...");
-            }).catch(error => {
-                console.log("Audio failed:", error);
+        btn.addEventListener('click', function() {
+
+            audio.load();
+            audio.play().then(() => {
+                console.log("সাফল্যের সাথে অডিও বাজছে!");
+            }).catch(e => {
+                console.error("অডিও এরর:", e);
+
+                alert("Please check your volume or refresh!");
             });
 
             startScreen.style.display = 'none';
             container.style.display = 'block';
-        }
+        });
     </script>
 </body>
 </html>
