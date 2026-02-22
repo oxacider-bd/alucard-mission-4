@@ -12,10 +12,10 @@
             background-size: cover; display: none;
         }
 
-        /* টর্চলাইট মাস্ক ইফেক্ট */
+
         #flashlight {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle 120px at var(--x) var(--y), transparent 0%, rgba(0,0,0,0.99) 100%);
+            background: radial-gradient(circle 200px at var(--x) var(--y), transparent 0%, rgba(0,0,0,0.95) 80%);
             pointer-events: none;
         }
 
@@ -24,25 +24,25 @@
         }
 
         button { 
-            background: #000; border: 1px solid #ff0000; color: #ff0000; 
-            padding: 20px 40px; cursor: pointer; font-size: 22px; 
-            letter-spacing: 5px; box-shadow: 0 0 15px #ff0000;
+            background: #000; border: 2px solid #ff0000; color: #ff0000; 
+            padding: 25px 50px; cursor: pointer; font-size: 24px; 
+            letter-spacing: 5px; box-shadow: 0 0 20px #ff0000; font-weight: bold;
         }
-        button:hover { background: #ff0000; color: #000; }
+        button:hover { background: #ff0000; color: #000; box-shadow: 0 0 40px #ff0000; }
     </style>
 </head>
 <body>
 
     <div id="start-screen">
         <button onclick="enterGrave()">ENTER THE GRAVE</button>
-        <p style="margin-top: 20px; color: #444; font-size: 12px;">Use Headphones for better experience</p>
+        <p style="margin-top: 20px; color: #666; font-size: 14px; letter-spacing: 2px;">মরণকূপে স্বাগতম...</p>
     </div>
 
     <div id="grave-container">
         <div id="flashlight"></div>
     </div>
 
-    <audio id="audio">
+    <audio id="audio" preload="auto">
         <source src="boss_voice.mp3" type="audio/mpeg">
     </audio>
 
@@ -51,17 +51,22 @@
         const startScreen = document.getElementById('start-screen');
         const audio = document.getElementById('audio');
 
-        function enterGrave() {
-            startScreen.style.display = 'none'; // বাটন সরিয়ে ফেলবে
-            container.style.display = 'block'; // কবরের ছবি দেখাবে
-            audio.play(); // অডিও চালু করবে
-        }
 
-        // মাউস নাড়ালে টর্চলাইটের পজিশন আপডেট হবে
         document.addEventListener('mousemove', e => {
             container.style.setProperty('--x', e.clientX + 'px');
             container.style.setProperty('--y', e.clientY + 'px');
         });
+
+        function enterGrave() {
+        audio.play().then(() => {
+                console.log("Audio playing...");
+            }).catch(error => {
+                console.log("Audio failed:", error);
+            });
+
+            startScreen.style.display = 'none';
+            container.style.display = 'block';
+        }
     </script>
 </body>
 </html>
